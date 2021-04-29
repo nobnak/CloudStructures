@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>8.0</LangVersion>
-        <Nullable>disable</Nullable>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;net461;net5</TargetFrameworks>
+        <LangVersion>9.0</LangVersion>
+        <Nullable>enable</Nullable>
         <!-- NuGet -->
         <IsPackable>true</IsPackable>
         <PackageId>CloudStructures</PackageId>
-        <Version>2.3.2.0</Version>
+        <Version>3.0.0.0</Version>
         <Description>Redis Client based on StackExchange.Redis.</Description>
         <PackageProjectUrl>https://github.com/neuecc/CloudStructures</PackageProjectUrl>
         <PackageIconUrl></PackageIconUrl>
@@ -23,8 +23,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
-        <PackageReference Include="System.Text.Json" Version="5.0.0" />
+        <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' != 'net5'">
+        <PackageReference Include="System.Text.Json" Version="5.0.2" />
     </ItemGroup>
 
 </Project>
