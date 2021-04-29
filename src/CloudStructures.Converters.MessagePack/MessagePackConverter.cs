@@ -9,6 +9,13 @@ namespace CloudStructures.Converters
     /// </summary>
     public sealed class MessagePackConverter : IValueConverter
     {
+        public MessagePackConverter(bool compress = true) {
+            Options = MessagePackSerializerOptions.Standard.WithCompression(
+                compress ? MessagePackCompression.Lz4BlockArray : MessagePackCompression.None);
+        }
+
+        public MessagePackSerializerOptions Options { get; set; }
+
         /// <summary>
         /// Serialize value to binary.
         /// </summary>
@@ -16,7 +23,7 @@ namespace CloudStructures.Converters
         /// <param name="value"></param>
         /// <returns></returns>
         public byte[] Serialize<T>(T value)
-            => LZ4MessagePackSerializer.Serialize(value);
+            => MessagePackSerializer.Serialize(value, Options);
 
 
         /// <summary>
@@ -26,7 +33,7 @@ namespace CloudStructures.Converters
         /// <param name="value"></param>
         /// <returns></returns>
         public T Deserialize<T>(byte[] value)
-            => LZ4MessagePackSerializer.Deserialize<T>(value);
+            => MessagePackSerializer.Deserialize<T>(value, Options);
     }
 }
 
